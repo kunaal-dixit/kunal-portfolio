@@ -42,5 +42,5 @@ next-env.d.ts
 
 # salesforce mcp, claude and cursor configs
 .mcp.json
-.CLAUDE.md
+CLAUDE.md
 .cursorrules
