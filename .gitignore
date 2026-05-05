@@ -40,5 +40,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# salesforce mcp
+# salesforce mcp, claude and cursor configs
 .mcp.json
+.CLAUDE.md
+.cursorrules

@@ -169,6 +169,15 @@ export default function BlogSearch({ posts }) {
                     </time>
                     <span>•</span>
                     <span>{post.readingTime}</span>
+                    {/* Draft badge — only appears in dev mode */}
+                    {post.draft && (
+                      <>
+                        <span>•</span>
+                        <span className="rounded-full bg-yellow-100 px-2 py-0.5 text-xs font-medium uppercase tracking-wider text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-200">
+                          Draft
+                        </span>
+                      </>
+                    )}
                   </div>
                   <h2 className="mb-2 font-serif text-2xl font-bold text-gray-900 transition group-hover:text-accent-600 dark:text-white dark:group-hover:text-accent-500">
                     {post.title}
