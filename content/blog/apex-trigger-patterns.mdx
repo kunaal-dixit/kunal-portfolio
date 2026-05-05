@@ -1,0 +1,133 @@
+---
+title: "5 Apex Trigger Patterns Every Salesforce Developer Should Know"
+description: "A practical guide to bulkification, the trigger handler pattern, and avoiding the most common pitfalls in Salesforce trigger development."
+date: "2026-04-20"
+tags: ["Salesforce", "Apex", "Best Practices", "Triggers"]
+author: "Your Name"
+---
+
+## Why this matters
+
+Triggers are the workhorses of Salesforce automation. Done well, they're invisible. Done poorly, they take down production orgs at 2 AM. After working on dozens of orgs over the past 7 years, here are five patterns that consistently separate good trigger code from bad.
+
+## 1. Always bulkify
+
+The single most common mistake I see in Apex code is treating `Trigger.new` as a single record. Salesforce can pass up to 200 records to a trigger at once — your code must handle all of them.
+
+**❌ Don't do this:**
+
+```apex
+trigger AccountTrigger on Account (after insert) {
+    Account a = Trigger.new[0];
+    // ... process a single record
+}
+```
+
+**✅ Do this:**
+
+```apex
+trigger AccountTrigger on Account (after insert) {
+    for (Account a : Trigger.new) {
+        // ... process each record
+    }
+}
+```
+
+Better yet, collect IDs and query/update in bulk outside the loop.
+
+## 2. One trigger per object
+
+The "one trigger per object" rule is non-negotiable. If you have multiple triggers on the same object, you have **no control over execution order** — Salesforce can fire them in any sequence.
+
+Instead, route everything through a single trigger that delegates to a handler class.
+
+```apex
+trigger AccountTrigger on Account (
+    before insert, before update, before delete,
+    after insert, after update, after delete
+) {
+    new AccountTriggerHandler().run();
+}
+```
+
+## 3. Use a trigger handler framework
+
+The handler class encapsulates all logic and makes the trigger itself a one-liner. Here's a minimal pattern:
+
+```apex
+public class AccountTriggerHandler {
+    public void run() {
+        if (Trigger.isBefore && Trigger.isInsert) {
+            beforeInsert(Trigger.new);
+        }
+        if (Trigger.isAfter && Trigger.isUpdate) {
+            afterUpdate(Trigger.new, Trigger.oldMap);
+        }
+        // ... etc
+    }
+
+    private void beforeInsert(List<Account> newAccounts) {
+        // your logic here
+    }
+
+    private void afterUpdate(
+        List<Account> newList,
+        Map<Id, Account> oldMap
+    ) {
+        // your logic here
+    }
+}
+```
+
+For larger orgs, look into open-source frameworks like **fflib's Trigger Handler** or **Kevin O'Hara's sfdc-trigger-framework**.
+
+## 4. Prevent recursion
+
+Triggers can fire themselves. If you update records inside an `after update` trigger, that update fires `before update` and `after update` again — and you're suddenly in an infinite loop, hitting governor limits.
+
+The classic guard:
+
+```apex
+public class AccountTriggerHandler {
+    private static Set<Id> processedIds = new Set<Id>();
+
+    public void run() {
+        Set<Id> newIds = Trigger.newMap.keySet();
+        Set<Id> toProcess = new Set<Id>();
+        for (Id id : newIds) {
+            if (!processedIds.contains(id)) {
+                toProcess.add(id);
+                processedIds.add(id);
+            }
+        }
+        // ... process only `toProcess`
+    }
+}
+```
+
+## 5. Test for bulk behavior
+
+If your test class only inserts one record, your test passes — but your code may still fail in production with 200 records. **Always include a bulk test:**
+
+```apex
+@isTest
+static void testBulkInsert() {
+    List<Account> accounts = new List<Account>();
+    for (Integer i = 0; i < 200; i++) {
+        accounts.add(new Account(Name = 'Test ' + i));
+    }
+
+    Test.startTest();
+    insert accounts;
+    Test.stopTest();
+
+    // Assertions on all 200 records
+    System.assertEquals(200, [SELECT COUNT() FROM Account]);
+}
+```
+
+## Wrapping up
+
+These five rules sound simple, but applying them rigorously is the difference between a stable org and one that breaks weekly. If you're new to Salesforce development, get these right before you worry about anything fancier.
+
+What patterns have saved you the most pain? [Let me know](mailto:your.email@example.com) — I'd love to hear.

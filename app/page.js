@@ -1,65 +1,139 @@
-import Image from "next/image";
+// app/page.js
+import Link from "next/link";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { siteConfig } from "@/lib/siteConfig";
+import { getAllPosts } from "@/lib/posts";
+import { format } from "date-fns";
 
 export default function Home() {
+  const recentPosts = getAllPosts().slice(0, 3);
+  const featuredProjects = siteConfig.projects.slice(0, 3);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="mx-auto max-w-3xl px-6 py-16 sm:py-24">
+      {/* Hero */}
+      <section className="mb-20">
+        <p className="mb-4 text-sm font-medium uppercase tracking-widest text-accent-600 dark:text-accent-500">
+          {siteConfig.role}
+        </p>
+        <h1 className="mb-6 font-serif text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl dark:text-white">
+          Hi, I'm {siteConfig.name.split(" ")[0]}.
+        </h1>
+        <p className="text-lg leading-relaxed text-gray-600 sm:text-xl dark:text-gray-400">
+          {siteConfig.bio}
+        </p>
+
+        <div className="mt-8 flex flex-wrap gap-4">
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-2 rounded-full bg-gray-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            View Projects <ArrowRight size={16} />
+          </Link>
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-2 rounded-full border border-gray-300 px-5 py-2.5 text-sm font-medium text-gray-700 transition hover:border-gray-400 dark:border-gray-700 dark:text-gray-300 dark:hover:border-gray-600"
           >
-            Documentation
-          </a>
+            Read Articles
+          </Link>
         </div>
-      </main>
+      </section>
+
+      {/* Skills */}
+      <section className="mb-20">
+        <h2 className="mb-6 font-serif text-2xl font-bold text-gray-900 dark:text-white">
+          Tech Stack
+        </h2>
+        <div className="flex flex-wrap gap-2">
+          {siteConfig.skills.map((skill) => (
+            <span
+              key={skill}
+              className="rounded-full border border-gray-200 px-3 py-1 text-sm text-gray-700 dark:border-gray-800 dark:text-gray-300"
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
+      </section>
+
+      {/* Featured Projects */}
+      <section className="mb-20">
+        <div className="mb-6 flex items-center justify-between">
+          <h2 className="font-serif text-2xl font-bold text-gray-900 dark:text-white">
+            Selected Work
+          </h2>
+          <Link
+            href="/projects"
+            className="text-sm font-medium text-accent-600 hover:underline dark:text-accent-500"
+          >
+            All projects →
+          </Link>
+        </div>
+        <div className="space-y-6">
+          {featuredProjects.map((project) => (
+            <article
+              key={project.title}
+              className="group border-l-2 border-gray-200 pl-6 transition hover:border-accent-500 dark:border-gray-800"
+            >
+              <h3 className="mb-2 font-serif text-xl font-semibold text-gray-900 dark:text-white">
+                {project.title}
+              </h3>
+              <p className="mb-3 text-gray-600 dark:text-gray-400">
+                {project.description}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-500"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* Recent Articles */}
+      {recentPosts.length > 0 && (
+        <section>
+          <div className="mb-6 flex items-center justify-between">
+            <h2 className="font-serif text-2xl font-bold text-gray-900 dark:text-white">
+              Recent Writing
+            </h2>
+            <Link
+              href="/blog"
+              className="text-sm font-medium text-accent-600 hover:underline dark:text-accent-500"
+            >
+              All articles →
+            </Link>
+          </div>
+          <ul className="divide-y divide-gray-100 dark:divide-gray-900">
+            {recentPosts.map((post) => (
+              <li key={post.slug}>
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="group flex items-baseline justify-between gap-4 py-4 transition"
+                >
+                  <div className="flex-1">
+                    <h3 className="font-serif text-lg font-semibold text-gray-900 group-hover:text-accent-600 dark:text-white dark:group-hover:text-accent-500">
+                      {post.title}
+                    </h3>
+                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                      {post.description}
+                    </p>
+                  </div>
+                  <time className="hidden whitespace-nowrap text-sm text-gray-500 sm:block dark:text-gray-500">
+                    {format(new Date(post.date), "MMM yyyy")}
+                  </time>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
     </div>
   );
 }
