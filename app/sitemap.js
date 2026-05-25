@@ -8,7 +8,7 @@ export default function sitemap() {
   const baseUrl = siteConfig.url;
 
   // Static routes
-  const routes = ["", "/about", "/projects", "/blog", "/contact"].map(
+  const routes = ["", "/about", "/blog", "/contact"].map(
     (path) => ({
       url: `${baseUrl}${path}`,
       lastModified: new Date().toISOString(),

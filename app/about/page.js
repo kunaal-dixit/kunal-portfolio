@@ -23,15 +23,18 @@ export default function AboutPage() {
       <section className="mb-16 prose prose-lg dark:prose-invert">
         <h2>My journey</h2>
         <p>
-          I started my career as a Junior Salesforce Developer in 2018 and have
-          since worked across Sales Cloud, Service Cloud, Experience Cloud, and
-          CPQ. Over the years, I've shipped solutions for clients ranging from
-          early-stage startups to Fortune 500 enterprises.
+          I started out at Infosys in 2018 building order management
+          integrations in Apex and Java, then leaned fully into the Salesforce
+          platform — shipping 2GP managed packages at Manras, customizing
+          Financial Services Cloud at Deloitte, and now architecting
+          large-scale Service Cloud and data systems at Intuit.
         </p>
         <p>
-          What I love most about Salesforce is how it sits at the intersection
-          of business and technology — the best implementations require deep
-          empathy for users, rigorous architectural thinking, and clean code.
+          Today, my work sits at the intersection of Salesforce and
+          event-driven data infrastructure — Kafka, Flink, AWS, and Databricks
+          pipelines moving tens of millions of records a day. The best
+          implementations require deep empathy for users, rigorous
+          architectural thinking, and clean code.
         </p>
         <p>
           When I'm not building, I write articles to share what I've learned —

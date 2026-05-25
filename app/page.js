@@ -1,13 +1,12 @@
 // app/page.js
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { siteConfig } from "@/lib/siteConfig";
 import { getAllPosts } from "@/lib/posts";
 import { format } from "date-fns";
 
 export default function Home() {
   const recentPosts = getAllPosts().slice(0, 3);
-  const featuredProjects = siteConfig.projects.slice(0, 3);
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-16 sm:py-24">
@@ -25,16 +24,16 @@ export default function Home() {
 
         <div className="mt-8 flex flex-wrap gap-4">
           <Link
-            href="/projects"
+            href="/blog"
             className="inline-flex items-center gap-2 rounded-full bg-gray-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
           >
-            View Projects <ArrowRight size={16} />
+            Read Articles <ArrowRight size={16} />
           </Link>
           <Link
-            href="/blog"
+            href="/about"
             className="inline-flex items-center gap-2 rounded-full border border-gray-300 px-5 py-2.5 text-sm font-medium text-gray-700 transition hover:border-gray-400 dark:border-gray-700 dark:text-gray-300 dark:hover:border-gray-600"
           >
-            Read Articles
+            About Me
           </Link>
         </div>
       </section>
@@ -52,46 +51,6 @@ export default function Home() {
             >
               {skill}
             </span>
-          ))}
-        </div>
-      </section>
-
-      {/* Featured Projects */}
-      <section className="mb-20">
-        <div className="mb-6 flex items-center justify-between">
-          <h2 className="font-serif text-2xl font-bold text-gray-900 dark:text-white">
-            Selected Work
-          </h2>
-          <Link
-            href="/projects"
-            className="text-sm font-medium text-accent-600 hover:underline dark:text-accent-500"
-          >
-            All projects →
-          </Link>
-        </div>
-        <div className="space-y-6">
-          {featuredProjects.map((project) => (
-            <article
-              key={project.title}
-              className="group border-l-2 border-gray-200 pl-6 transition hover:border-accent-500 dark:border-gray-800"
-            >
-              <h3 className="mb-2 font-serif text-xl font-semibold text-gray-900 dark:text-white">
-                {project.title}
-              </h3>
-              <p className="mb-3 text-gray-600 dark:text-gray-400">
-                {project.description}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-500"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </article>
           ))}
         </div>
       </section>
