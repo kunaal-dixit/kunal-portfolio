@@ -1,5 +1,6 @@
 // app/contact/page.js
-import { Mail, Github, Linkedin, Twitter } from "lucide-react";
+import { Mail } from "lucide-react";
+import { Github, Linkedin } from "@/components/BrandIcons";
 import { siteConfig } from "@/lib/siteConfig";
 
 export const metadata = {
@@ -32,13 +33,6 @@ const channels = [
     href: siteConfig.social.github,
     icon: Github,
     description: "Open-source contributions and side projects.",
-  },
-  {
-    name: "Twitter / X",
-    handle: "DMs are open",
-    href: siteConfig.social.twitter,
-    icon: Twitter,
-    description: "Casual conversations and tech discussions.",
   },
 ];
 

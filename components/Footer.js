@@ -1,6 +1,7 @@
 // components/Footer.js
 import Link from "next/link";
-import { Github, Linkedin, Twitter, Mail, Rss } from "lucide-react";
+import { Mail, Rss } from "lucide-react";
+import { Github, Linkedin } from "@/components/BrandIcons";
 import { siteConfig } from "@/lib/siteConfig";
 
 export default function Footer() {
@@ -30,15 +31,6 @@ export default function Footer() {
             className="hover:text-gray-900 dark:hover:text-white"
           >
             <Linkedin size={18} />
-          </a>
-          <a
-            href={siteConfig.social.twitter}
-            aria-label="Twitter"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-gray-900 dark:hover:text-white"
-          >
-            <Twitter size={18} />
           </a>
           <a
             href={siteConfig.social.email}

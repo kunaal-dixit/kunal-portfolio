@@ -36,7 +36,7 @@ module.exports = {
               "&:hover": { textDecoration: "underline" },
             },
             "h1, h2, h3, h4": {
-              fontFamily: theme("fontFamily.serif").join(", "),
+              fontFamily: [].concat(theme("fontFamily.serif")).join(", "),
               fontWeight: "700",
               letterSpacing: "-0.02em",
             },

@@ -17,7 +17,7 @@ export default function Home() {
           {siteConfig.role}
         </p>
         <h1 className="mb-6 font-serif text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl dark:text-white">
-          Hi, I'm {siteConfig.name.split(" ")[0]}.
+          Hi, I'm {siteConfig.name.split(" ")[0]}
         </h1>
         <p className="text-lg leading-relaxed text-gray-600 sm:text-xl dark:text-gray-400">
           {siteConfig.bio}

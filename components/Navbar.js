@@ -20,7 +20,6 @@ export default function Navbar() {
           className="font-serif text-xl font-bold tracking-tight text-gray-900 dark:text-white"
         >
           {siteConfig.name.split(" ")[0] || "Portfolio"}
-          <span className="text-accent-500">.</span>
         </Link>
 
         <div className="flex items-center gap-1 sm:gap-6">

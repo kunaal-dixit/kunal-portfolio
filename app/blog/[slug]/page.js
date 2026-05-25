@@ -16,7 +16,8 @@ export async function generateStaticParams() {
 
 // Per-post SEO metadata
 export async function generateMetadata({ params }) {
-  const post = getPostBySlug(params.slug);
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
   if (!post) return {};
 
   return {
@@ -33,12 +34,6 @@ export async function generateMetadata({ params }) {
       tags: post.tags,
       images: post.image ? [post.image] : ["/og-image.png"],
     },
-    twitter: {
-      card: "summary_large_image",
-      title: post.title,
-      description: post.description,
-      images: post.image ? [post.image] : ["/og-image.png"],
-    },
     alternates: {
       canonical: `${siteConfig.url}/blog/${post.slug}`,
     },
@@ -53,8 +48,9 @@ const prettyCodeOptions = {
   keepBackground: false,
 };
 
-export default function BlogPost({ params }) {
-  const post = getPostBySlug(params.slug);
+export default async function BlogPost({ params }) {
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
   if (!post) notFound();
 
   // JSON-LD structured data for rich Google results
@@ -145,19 +141,6 @@ export default function BlogPost({ params }) {
       <footer className="mt-16 border-t border-gray-100 pt-8 dark:border-gray-900">
         <p className="text-gray-600 dark:text-gray-400">
           Enjoyed this? Share it on{" "}
-          <a
-            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-              `${post.title} by @${siteConfig.social.twitter
-                .split("/")
-                .pop()} ${siteConfig.url}/blog/${post.slug}`
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-medium text-accent-600 underline dark:text-accent-500"
-          >
-            Twitter
-          </a>{" "}
-          or{" "}
           <a
             href={`https://www.linkedin.com/sharing/share-offsite/?url=${siteConfig.url}/blog/${post.slug}`}
             target="_blank"

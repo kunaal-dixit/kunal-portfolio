@@ -31,13 +31,6 @@ export const metadata = {
       },
     ],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: siteConfig.siteName,
-    description: siteConfig.description,
-    images: ["/og-image.png"],
-    creator: "@yourtwitterhandle",
-  },
   robots: {
     index: true,
     follow: true,
