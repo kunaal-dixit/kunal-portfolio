@@ -4,10 +4,11 @@ import ThemeToggle from "./ThemeToggle";
 import { siteConfig } from "@/lib/siteConfig";
 
 const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/blog", label: "Blog" },
-  { href: "/contact", label: "Contact" },
+  // Hidden during maintenance mode
+  // { href: "/", label: "Home" },
+  // { href: "/about", label: "About" },
+  // { href: "/blog", label: "Blog" },
+  // { href: "/contact", label: "Contact" },
 ];
 
 export default function Navbar() {
