@@ -44,3 +44,7 @@ next-env.d.ts
 .mcp.json
 CLAUDE.md
 .cursorrules
+
+# folders
+.claude
+.sfdx

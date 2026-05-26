@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(curl -s -o /dev/null -w \"welcome: %{http_code}\\\\n\" http://localhost:3000/blog/welcome)",
-      "Bash(curl -s -o /dev/null -w \"apex: %{http_code}\\\\n\" http://localhost:3000/blog/apex-trigger-patterns)"
-    ]
-  }
-}
