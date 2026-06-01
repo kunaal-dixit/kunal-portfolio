@@ -23,24 +23,18 @@ export default function AboutPage() {
       <section className="mb-16 prose prose-lg dark:prose-invert">
         <h2>My journey</h2>
         <p>
-          I started out at Infosys in 2018 building order management
+          I started out at <b>Infosys</b> in 2018 building order management
           integrations in Apex and Java, then leaned fully into the Salesforce
-          platform — shipping 2GP managed packages at Manras, customizing
-          Financial Services Cloud at Deloitte, and now architecting
-          large-scale Service Cloud and data systems at Intuit.
+          platform — shipping 2GP managed packages at <b>Manras</b>, customizing
+          Financial Services Cloud at <b>Deloitte</b>, and now architecting
+          large-scale Service Cloud and data systems at <b>Intuit</b>.
         </p>
         <p>
           Today, my work sits at the intersection of Salesforce and
           event-driven data infrastructure — Kafka, Flink, AWS, and Databricks
-          pipelines moving tens of millions of records a day. The best
+          pipelines moving tens of millions of records a day. In my opinion, The best
           implementations require deep empathy for users, rigorous
           architectural thinking, and clean code.
-        </p>
-        <p>
-          When I'm not building, I write articles to share what I've learned —
-          mostly about Apex patterns, Lightning Web Components, and integration
-          architecture. I believe the best way to deepen knowledge is to teach
-          it.
         </p>
       </section>
 

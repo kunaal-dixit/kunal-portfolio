@@ -9,8 +9,7 @@ export default function Footer() {
     <footer className="border-t border-gray-100 bg-gray-50 py-10 dark:border-gray-900 dark:bg-gray-950">
       <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-6 px-6 sm:flex-row">
         <p className="text-sm text-gray-600 dark:text-gray-400">
-          © {new Date().getFullYear()} {siteConfig.name}. Built with Next.js &
-          deployed on Vercel.
+          © {new Date().getFullYear()} {siteConfig.name}.
         </p>
 
         <div className="flex items-center gap-4 text-gray-500">
