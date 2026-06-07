@@ -9,7 +9,7 @@ export default function Home() {
   const recentPosts = getAllPosts().slice(0, 3);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-16 sm:py-24">
+    <div className="mx-auto max-w-5xl px-6 py-16 sm:py-24">
       {/* Hero */}
       <section className="mb-20">
         <p className="mb-4 text-sm font-medium uppercase tracking-widest text-accent-600 dark:text-accent-500">

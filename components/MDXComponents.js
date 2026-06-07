@@ -19,17 +19,31 @@ export const mdxComponents = {
     return <Link href={href}>{children}</Link>;
   },
 
-  // Optimized images
-  img: ({ src, alt, ...props }) => (
-    <Image
-      src={src}
-      alt={alt || ""}
-      width={800}
-      height={500}
-      className="rounded-xl"
-      {...props}
-    />
-  ),
+  // Optimized images (SVGs pass through as native <img> — vector, no optimization needed)
+  img: ({ src, alt, ...props }) => {
+    const isSvg = typeof src === "string" && src.toLowerCase().endsWith(".svg");
+    if (isSvg) {
+      // eslint-disable-next-line @next/next/no-img-element
+      return (
+        <img
+          src={src}
+          alt={alt || ""}
+          className="mx-auto h-auto w-full max-w-3xl rounded-xl"
+          {...props}
+        />
+      );
+    }
+    return (
+      <Image
+        src={src}
+        alt={alt || ""}
+        width={800}
+        height={500}
+        className="rounded-xl"
+        {...props}
+      />
+    );
+  },
 
   // Custom callout component - usage:  <Callout type="info">Hello</Callout>
   Callout: ({ type = "info", children }) => {

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { format } from "date-fns";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypePrettyCode from "rehype-pretty-code";
+import remarkGfm from "remark-gfm";
 import { ArrowLeft } from "lucide-react";
 import { getPostBySlug, getAllSlugs } from "@/lib/posts";
 import { siteConfig } from "@/lib/siteConfig";
@@ -82,7 +83,7 @@ export default async function BlogPost({ params }) {
   };
 
   return (
-    <article className="mx-auto max-w-3xl px-6 py-16 sm:py-24">
+    <article className="mx-auto max-w-5xl px-6 py-16 sm:py-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -131,6 +132,7 @@ export default async function BlogPost({ params }) {
           components={mdxComponents}
           options={{
             mdxOptions: {
+              remarkPlugins: [remarkGfm],
               rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]],
             },
           }}
@@ -140,15 +142,10 @@ export default async function BlogPost({ params }) {
       {/* Footer CTA */}
       <footer className="mt-16 border-t border-gray-100 pt-8 dark:border-gray-900">
         <p className="text-gray-600 dark:text-gray-400">
-          Enjoyed this? Share it on{" "}
-          <a
-            href={`https://www.linkedin.com/sharing/share-offsite/?url=${siteConfig.url}/blog/${post.slug}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-medium text-accent-600 underline dark:text-accent-500"
-          >
+          Enjoyed this or have any questions/feedback? Share it on{" "}
+          <Link href={siteConfig.social.linkedin} className="font-medium text-accent-600 underline dark:text-accent-500">
             LinkedIn
-          </a>
+          </Link>
           .
         </p>
       </footer>
