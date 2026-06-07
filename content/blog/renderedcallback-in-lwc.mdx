@@ -311,6 +311,6 @@ The mental test is simple: *if this method ran ten times in a row right now, wou
 - **Don't fetch data here.** Data loading belongs in `connectedCallback()` or a `@wire`.
 - **Query the DOM via `this.template.querySelector`**, not `document`, to respect shadow DOM boundaries.
 
-## Closing thought
+## Closing thoughts
 
 `renderedCallback()` is a precision tool. Used well, it handles all the "after the DOM exists" work that no other hook can. Used carelessly, it's the fastest way to freeze a component. The mental model to keep: *this runs after every render, so make every line either idempotent or guarded.* Get that right and it becomes one of the most reliable hooks in your LWC toolkit.
