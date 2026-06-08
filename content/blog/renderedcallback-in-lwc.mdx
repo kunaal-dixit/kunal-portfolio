@@ -6,7 +6,7 @@ tags: ["Lightning Web Components", "Lifecycle Hooks", "Salesforce"]
 author: "Kunal Dixit"
 ---
 
-If you've spent any time building Lightning Web Components, you've met the lifecycle hooks: `constructor`, `connectedCallback`, `renderedCallback`, `disconnectedCallback`, and `errorCallback`. Of these, `renderedCallback()` is probably the most misunderstood — and the easiest to misuse. I remember back in 2019, when LWC was pretty new, i used to do lot of things wrong which also helped me understand the concepts better. RenderedCallback hook was one of those mistakes for me.
+If you've spent any time building Lightning Web Components, you've met the lifecycle hooks: `constructor`, `connectedCallback`, `renderedCallback`, `disconnectedCallback`, and `errorCallback`. Of these, `renderedCallback()` is probably the most misunderstood — and the easiest to misuse. I remember back in 2019, when LWC was pretty new, i used to do lot of things wrong which also helped me understand the concepts better. RenderedCallback hook was one of those mistakes for me. 
 
 In this article, i will try to break down what `renderedCallback()` actually does, how to decide when to reach for it versus a getter, setter, or `connectedCallback()`, the traps that catch most developers, and a handful of practical use cases with code you can drop into your own components.
 
@@ -169,10 +169,10 @@ export default class EditContactModal extends LightningElement {
     _submitAttempted = false;
 
     renderedCallback() {
-        this.focusFirstFieldOnOpen();   // Example 1
-        this.initPhoneMask();           // Example 2
-        this.syncScrollShadow();        // Example 3
-        this.scrollToFirstError();      // Example 4
+        this.focusFirstFieldOnOpen();   
+        this.initPhoneMask();           
+        this.syncScrollShadow();        
+        this.scrollToFirstError();      
     }
 }
 ```
@@ -266,7 +266,6 @@ scrollToFirstError() {
 }
 
 handleSubmit() {
-    // ...run validation, set .has-error classes on invalid fields...
     this._submitAttempted = true; // triggers a render; the scroll happens after
 }
 ```
@@ -300,16 +299,6 @@ A few practical ways to keep `renderedCallback()` idempotent:
 - **Check before you act.** Read the current DOM or property state and only write when it differs from the target. This both prevents accumulation and avoids triggering needless reactive re-renders.
 - **Make listeners self-deduplicating.** If you must add an event listener here, either guard it with a flag or remove-then-add so you never stack duplicates. Stacked listeners are a silent, hard-to-trace source of double-firing handlers.
 - **Treat the flag as the exception, not the rule.** If you find yourself adding three or four guard flags to one `renderedCallback()`, that's a signal the logic might belong in a more appropriate hook, a `@wire`, or a getter instead.
-
-The mental test is simple: *if this method ran ten times in a row right now, would my component still be correct?* If the answer is yes, you're safe. If it's no, you either need a guard or you're in the wrong lifecycle hook.
-
-## Let's recap the best practices
-
-- **Always guard one-time logic** with a private flag so it doesn't repeat on every render.
-- **Compare before you assign** reactive properties to avoid triggering extra renders.
-- **Keep it light.** This method runs frequently; heavy synchronous work here will make your UI feel sluggish.
-- **Don't fetch data here.** Data loading belongs in `connectedCallback()` or a `@wire`.
-- **Query the DOM via `this.template.querySelector`**, not `document`, to respect shadow DOM boundaries.
 
 ## Closing thoughts
 
